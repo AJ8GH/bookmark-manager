@@ -8,6 +8,7 @@ group :development, :production do
   gem 'puma'
   gem 'rack'
   gem 'sinatra'
+  gem 'pg'
 end
 
 group :test, :development do

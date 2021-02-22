@@ -6,8 +6,10 @@ feature 'viewing bookmarks' do
 
   scenario 'seeing list of bookmarks' do
     visit '/bookmarks'
-    expect(page).to have_content 'https://fantasy.premierleague.com/'
-    expect(page).to have_content 'https://www.amazon.co.uk/'
-    expect(page).to have_content 'https://www.youtube.com/'
+    expect(page).to have_content 'http://www.makersacademy.com'
+    expect(page).to have_content 'http://www.google.com'
+    expect(page).to have_content 'http://www.destroyallsoftware.com'
   end
 end
+
+
