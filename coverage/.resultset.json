@@ -23,15 +23,23 @@
         null,
         1,
         1,
-        4,
-        4,
-        16,
+        3,
+        3,
+        21,
         null,
         null
       ],
       "/Users/adamjonas/Projects/makers/week-4/bookmark-manager/spec/feature/viewing_bookmarks_spec.rb": [
         1,
         1,
+        2,
+        1,
+        1,
+        1,
+        null,
+        null,
+        null,
+        1,
         1,
         1,
         null,
@@ -39,8 +47,8 @@
         1,
         1,
         1,
-        1,
-        1,
+        0,
+        0,
         null,
         null,
         null,
@@ -58,6 +66,6 @@
         null
       ]
     },
-    "timestamp": 1614028863
+    "timestamp": 1614033301
   }
 }
