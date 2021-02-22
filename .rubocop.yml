@@ -1,0 +1,5 @@
+AllCops
+  Enabled: true
+
+config: AllCops: NewCops: enable
+
