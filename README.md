@@ -69,6 +69,12 @@ I want to be able to see a list of bookmarks
 
 ### Add new bookmarks
 
+```
+As a website browser,
+So that I can revisit pages I enjoy,
+I want to be able to add bookmarks
+```
+
 ### Delete bookmarks
 
 ### Update bookmarks
