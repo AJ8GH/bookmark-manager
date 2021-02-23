@@ -19,18 +19,28 @@ gems
 
 ## Setting up database
 
-- Connect to psql
-- Create `bookmark_manager` database:
-```sql
-CREATE DATABASE bookmark_manager;
-```
-- Create `bookmarks` table
-```sql
-CREATE TABLE bookmarks(
-  id SERIAL PRIMARY KEY,
-  url VARCHAR ( 60 )
-);
-```
+- First, connect to psql
+
+### Development Environment:
+
+  - Create `bookmark_manager` database:
+  ```sql
+  CREATE DATABASE bookmark_manager;
+  ```
+  - Create `bookmarks` table
+  ```sql
+  CREATE TABLE bookmarks(
+    id SERIAL PRIMARY KEY,
+    url VARCHAR ( 60 )
+  );
+
+### Test Environment
+
+  - Create `bookmark_manager_test` database:
+  ```sql
+  CREATE DATABASE bookmark_manager;
+  ```
+  - Create identical `bookmarks` table as above
 
 ## Running tests
 

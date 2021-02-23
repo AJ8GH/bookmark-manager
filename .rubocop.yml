@@ -1,5 +1,5 @@
-AllCops
-  Enabled: true
+AllCops:
+  NewCops: enable
 
-config: AllCops: NewCops: enable
-
+Style/FrozenStringLiteralComment:
+  Enabled: false
