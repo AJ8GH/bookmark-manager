@@ -15,8 +15,9 @@ describe Bookmark do
 
   describe '.create' do
     it 'adds a bookmark to the database' do
-      described_class.create(title: 'Test', url: 'http://test.com/')
+      bookmark = described_class.create(title: 'Test', url: 'http://test.com/')
       expect(described_class.all.map(&:title)).to include('Test')
+      expect(described_class.all.map(&:url)).to include('http://test.com/')
     end
 
     it 'creates a new bookmark' do

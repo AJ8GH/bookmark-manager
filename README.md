@@ -70,12 +70,18 @@ I want to be able to see a list of bookmarks
 ### Add new bookmarks
 
 ```
-As a website browser,
+As a website user,
 So that I can revisit pages I enjoy,
 I want to be able to add bookmarks
 ```
 
 ### Delete bookmarks
+
+```
+As a website user,
+So that I can remove bookmarks I no longer need,
+I want to be able to delete bookmarks
+```
 
 ### Update bookmarks
 

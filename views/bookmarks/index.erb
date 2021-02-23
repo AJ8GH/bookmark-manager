@@ -1,3 +1,7 @@
+<form action="bookmarks/new">
+  <input type="submit" value="Add Bookmark">
+</form>
+
 <ul>
   <% @bookmarks.each do |bookmark| %>
     <li>
@@ -7,7 +11,3 @@
     </li>
   <% end %>
 </ul>
-
-<form action="bookmarks/new">
-  <input type="submit" value="Add Bookmark">
-</form>

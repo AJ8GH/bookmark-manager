@@ -1,7 +1,7 @@
 require 'pg'
 
 class Bookmark
-  attr_reader :title, :url
+  attr_reader :title, :url, :id
 
   class << self
     def all
@@ -33,5 +33,6 @@ class Bookmark
   def initialize(args)
     @title = args[:title]
     @url = args[:url]
+    @id = args[:id]
   end
 end
