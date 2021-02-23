@@ -5,9 +5,8 @@ feature 'deleting bookmarks' do
     visit '/bookmarks'
     expect(page).to have_link('Test', href: 'http://test.com')
 
-    click_button 'Delete Bookmark'
-    fill_in :title, with: 'Test'
     click_button 'Delete'
     expect(page).not_to have_link('Test', href: 'http://test.com')
+    expect(page).not_to have_content 'Sinatra'
   end
 end

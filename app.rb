@@ -25,8 +25,8 @@ class BookmarkManager < Sinatra::Base
     erb :'bookmarks/index'
   end
 
-  get '/bookmarks/delete' do
-    erb :'bookmarks/delete'
+  delete '/bookmarks' do
+
   end
 
   run! if app_file == $PROGRAM_NAME
