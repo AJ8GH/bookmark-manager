@@ -1,11 +1,5 @@
 describe Bookmark do
-  before do
-    allow(Bookmark).to receive(:all) do
-      connection = PG.connect(dbname: 'bookmark_manager_test')
-      result = connection.exec('SELECT * FROM bookmarks;')
-      result.map { |row| row['url'] }
-    end
-  end
+  before { database_set_up }
 
   describe '.all' do
     it 'returns all the bookmarks' do

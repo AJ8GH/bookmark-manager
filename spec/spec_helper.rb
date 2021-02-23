@@ -3,7 +3,8 @@ Coveralls.wear!
 
 ENV['RACK_ENV'] = 'test'
 
-require_relative '../app.rb'
+require_relative '../app'
+require_relative 'database_helpers'
 
 require 'sinatra'
 require 'capybara'
