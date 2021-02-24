@@ -5,34 +5,51 @@ class Bookmark
 
   class << self
     def all
-      if ENV['ENVIRONMENT'] == 'test'
-        connection = PG.connect(dbname: 'bookmark_manager_test')
-      else
-        connection = PG.connect(dbname: 'bookmark_manager')
-      end
-      result = connection.exec('SELECT * FROM bookmarks;')
-      result.map { |row| new(title: row['title'], url: row['url']) }
+      result = database_connection.exec('SELECT * FROM bookmarks;')
+      result.map { |row| new(title: row['title'], url: row['url'], id: row['id']) }
     end
 
-    def create(bookmark)
-      title, url = bookmark[:title], bookmark[:url]
-
-      if ENV['ENVIRONMENT'] == 'test'
-        connection = PG.connect(dbname: 'bookmark_manager_test')
-      else
-        connection = PG.connect(dbname: 'bookmark_manager')
-      end
-      result = connection.exec(
+    def create(title:, url:)
+      result = database_connection.exec(
         "INSERT INTO bookmarks (title, url)
         VALUES('#{title}', '#{url}')
-        RETURNING id, url, title;")
-      new(id: result[0]['id'], url: result[0]['url'], title: result[0]['title'])
+        RETURNING id").first
+      new(id: result['id'], url: url, title: title)
+    end
+
+    def delete(id:)
+      database_connection.exec("DELETE FROM bookmarks WHERE id = #{id} ")
+    end
+
+    def find(id:)
+      result = database_connection.query(
+        "SELECT * FROM bookmarks WHERE id = #{id}"
+      ).first
+      new(id: id, title: result['title'], url: result['url'])
+    end
+
+    def update(id:, title:, url:)
+      database_connection.exec(
+        "UPDATE bookmarks
+        SET title = '#{title}',
+        url = '#{url}'
+        WHERE id = #{id}")
     end
   end
 
-  def initialize(args)
-    @title = args[:title]
-    @url = args[:url]
-    @id = args[:id]
+  def initialize(title:, url:, id:)
+    @title = title
+    @url = url
+    @id = id
+  end
+
+  private
+
+  def self.database_connection
+    if ENV['ENVIRONMENT'] == 'test'
+      PG.connect(dbname: 'bookmark_manager_test')
+    else
+      PG.connect(dbname: 'bookmark_manager')
+    end
   end
 end

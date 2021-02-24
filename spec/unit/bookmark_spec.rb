@@ -27,16 +27,54 @@ describe Bookmark do
     end
   end
 
+  describe '.delete' do
+    it 'deletes bookmark from database' do
+      described_class.create(title: 'Test', url: 'http://test.com')
+      expect(described_class.all).not_to be_empty
+
+      described_class.delete(id: 1)
+      expect(described_class.all).to be_empty
+    end
+  end
+
+  describe '.find' do
+    it 'finds bookmark by id' do
+      described_class.create(title: 'Test', url: 'http://test.com')
+      bookmark = described_class.find(id: 1)
+      expect(bookmark.title).to eq 'Test'
+    end
+
+    it 'finds the correct bookmark by id' do
+      described_class.create(title: 'Test', url: 'http://test.com')
+      described_class.create(title: 'Other', url: 'http://test.com')
+      described_class.create(title: 'Ruby', url: 'http://test.com')
+
+      bookmark = described_class.find(id: 2)
+      expect(bookmark.title).to eq 'Other'
+    end
+  end
+
+  describe '.udpate' do
+    it 'updates the record in the database' do
+      bookmark = described_class.create(title: 'Test', url: 'http://test.com')
+      described_class.update(id: bookmark.id, title: 'New title', url: bookmark.url)
+      bookmark = described_class.find(id: bookmark.id)
+
+      expect(bookmark.title).to eq 'New title'
+      expect(bookmark.id).to eq bookmark.id
+    end
+  end
+
   describe '#title' do
     it 'returns the bookmarks title' do
-      bookmark = described_class.new(title: 'Test', url: 'http://test.com/')
+      bookmark = described_class.new(title: 'Test', url: 'http://test.com/', id: 1)
       expect(bookmark.title).to eq 'Test'
     end
   end
 
   describe '#url' do
     it 'returns the url' do
-      bookmark = described_class.new(title: 'Test', url: 'http://test.com/')
+      bookmark = described_class.new(title: 'Test', url: 'http://test.com/', id: 1)
       expect(bookmark.url).to eq 'http://test.com/'
     end
   end

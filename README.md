@@ -85,6 +85,10 @@ I want to be able to delete bookmarks
 
 ### Update bookmarks
 
+As a user,
+So that I can fix typos and out of date bookmarks,
+I want to be able to update bookmarks
+
 ### Comment on bookmarks
 
 ### Tag bookmarks into categories
