@@ -4,8 +4,8 @@ class DatabaseConnection
   class << self
     attr_accessor :connection
 
-    def setup(dbname:)
-      self.connection = PG.connect(dbname: dbname)
+    def setup(database_name)
+      self.connection = PG.connect(dbname: database_name)
     end
 
     def query(sql_query)

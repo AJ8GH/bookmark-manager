@@ -1,16 +1,16 @@
-require 'pg'
-
 class Bookmark
   attr_reader :title, :url, :id
 
   class << self
     def all
-      result = database_connection.exec('SELECT * FROM bookmarks;')
-      result.map { |row| new(title: row['title'], url: row['url'], id: row['id']) }
+      result = database.query('SELECT * FROM bookmarks;')
+      result.map do |row|
+        new(title: row['title'], url: row['url'], id: row['id'])
+      end
     end
 
     def create(title:, url:)
-      result = database_connection.exec(
+      result = database.query(
         "INSERT INTO bookmarks (title, url)
         VALUES('#{title}', '#{url}')
         RETURNING id").first
@@ -18,18 +18,19 @@ class Bookmark
     end
 
     def delete(id:)
-      database_connection.exec("DELETE FROM bookmarks WHERE id = #{id} ")
+      database.query("DELETE FROM bookmarks WHERE id =#{id};")
+      # database_connection.exec("ALTER SEQUENCE bookmarks_id_seq RESTART WITH 1;")
     end
 
     def find(id:)
-      result = database_connection.query(
+      result = database.query(
         "SELECT * FROM bookmarks WHERE id = #{id}"
       ).first
       new(id: id, title: result['title'], url: result['url'])
     end
 
     def update(id:, title:, url:)
-      database_connection.exec(
+      database.query(
         "UPDATE bookmarks
         SET title = '#{title}',
         url = '#{url}'
@@ -45,11 +46,7 @@ class Bookmark
 
   private
 
-  def self.database_connection
-    if ENV['ENVIRONMENT'] == 'test'
-      PG.connect(dbname: 'bookmark_manager_test')
-    else
-      PG.connect(dbname: 'bookmark_manager')
-    end
+  def self.database
+    DatabaseConnection
   end
 end

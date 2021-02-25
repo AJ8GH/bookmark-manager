@@ -1,20 +1,24 @@
 describe DatabaseConnection do
   describe '.setup' do
-    it 'sets up a connection to the database argument and saves it' do
-      db_connection = described_class.setup(dbname: 'bookmark_manager_test')
+    it 'sets up a persistant connection to the database' do
+      db_connection = described_class.setup('bookmark_manager_test')
       expect(described_class.connection).to be db_connection
-      expect(described_class.connection).to respond_to(:query)
+      expect(described_class.connection).not_to be_nil
+    end
+
+    it 'sends connect call to PG with correct database' do
+      expect(PG).to receive(:connect).with(dbname: 'bookmark_manager_test')
+      described_class.setup('bookmark_manager_test')
     end
   end
 
   describe '.query' do
-    it 'executes query argument via' do
-      Bookmark.create(title: 'Test', url: 'http://test.com')
+    it 'runs a query from the database' do
+      connection = described_class.setup('bookmark_manager_test')
 
-      query = described_class.query('SELECT * FROM bookmarks')
-      expect(query.first['title']).to eq 'Test'
-      expect(query.first['url']).to eq 'http://test.com'
-      expect(query.first['id']).to eq '1'
+      expect(connection).to receive(:exec).with('SELECT * FROM bookmarks')
+
+      described_class.query('SELECT * FROM bookmarks')
     end
   end
 end
