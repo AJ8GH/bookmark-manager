@@ -91,7 +91,8 @@ describe Bookmark do
         "INSERT INTO comments(text, bookmark_id)
         VALUES('test comment', '#{bookmark.id}')
       ")
-      expect(bookmark.comments.first).to eq 'test comment'
+      comment = bookmark.comments.first
+      expect(comment.text).to eq 'test comment'
     end
   end
 end
