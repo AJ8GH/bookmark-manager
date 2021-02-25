@@ -13,7 +13,7 @@ describe DatabaseConnection do
   end
 
   describe '.query' do
-    xit 'runs a query on the setup connection' do
+    it 'runs a query on the setup connection' do
       connection = described_class.setup('bookmark_manager_test')
 
       expect(connection).to receive(:exec).with('SELECT * FROM bookmarks')

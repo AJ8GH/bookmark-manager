@@ -9,7 +9,7 @@
         <%= bookmark.title %>
       </a>
 
-      <form action="bookmarks/<%= bookmark.id %>" method="post">
+      <form action="bookmarks/<%= bookmark.id %>" method="POST">
         <input type="hidden" name="_method" value="DELETE">
         <input type="submit" value="Delete">
       </form>
@@ -21,6 +21,10 @@
 
       <form action="bookmarks/<%= bookmark.id %>/comments/new">
         <input type="submit" value="Add Comment">
+      </form>
+
+      <form action="bookmarks/<%= bookmark.id %>/tags/new">
+        <input type="submit" value="Add Tag">
       </form>
 
       <ul>
