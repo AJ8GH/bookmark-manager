@@ -1,3 +1,5 @@
+require 'uri'
+
 class Bookmark
   attr_reader :title, :url, :id
 
@@ -10,16 +12,19 @@ class Bookmark
     end
 
     def create(title:, url:)
+      return false unless valid_url?(url)
+
       result = database.query(
         "INSERT INTO bookmarks (title, url)
         VALUES('#{title}', '#{url}')
-        RETURNING id").first
+        RETURNING id"
+      ).first
+
       new(id: result['id'], url: url, title: title)
     end
 
     def delete(id:)
       database.query("DELETE FROM bookmarks WHERE id =#{id};")
-      # database_connection.exec("ALTER SEQUENCE bookmarks_id_seq RESTART WITH 1;")
     end
 
     def find(id:)
@@ -34,7 +39,8 @@ class Bookmark
         "UPDATE bookmarks
         SET title = '#{title}',
         url = '#{url}'
-        WHERE id = #{id}")
+        WHERE id = #{id}"
+      )
     end
   end
 
@@ -46,7 +52,13 @@ class Bookmark
 
   private
 
-  def self.database
-    DatabaseConnection
+  class << self
+    def database
+      DatabaseConnection
+    end
+
+    def valid_url?(url)
+      url =~ /\A#{URI::regexp(['http', 'https'])}\z/
+    end
   end
 end

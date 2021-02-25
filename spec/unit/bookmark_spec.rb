@@ -25,6 +25,11 @@ describe Bookmark do
       expect(bookmark.title).to eq 'Test'
       expect(bookmark.url).to eq 'http://test.com'
     end
+
+    it 'does not create bookmark if url is invalid' do
+      described_class.create(title: 'Test', url: 'Invalid')
+      expect(described_class.all).to be_empty
+    end
   end
 
   describe '.delete' do

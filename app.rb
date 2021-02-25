@@ -1,11 +1,13 @@
 require 'sinatra'
 require 'sinatra/flash'
+require 'uri'
 require './lib/bookmark'
 require './database_connection_setup'
 
 class BookmarkManager < Sinatra::Base
+  register Sinatra::Flash
+
   configure do
-    register Sinatra::Flash
     enable   :sessions
     set      :session_secret, ENV['SESSION_SECRET']
   end
@@ -19,7 +21,9 @@ class BookmarkManager < Sinatra::Base
   end
 
   post '/bookmarks' do
-    Bookmark.create(title: params[:title], url: params[:url])
+    valid_url = Bookmark.create(title: params[:title], url: params[:url])
+    flash[:notice] = "That's not a valid url" unless valid_url
+
     redirect '/bookmarks'
   end
 
