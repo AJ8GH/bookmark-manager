@@ -6,6 +6,7 @@ feature 'creating a tag and seeing it in bookmarks page' do
     first('.bookmark').click_button 'Add Tag'
     fill_in :tag, with: 'Test tag'
     click_button 'Submit'
+
     expect(page).to have_content 'Test tag'
   end
 end

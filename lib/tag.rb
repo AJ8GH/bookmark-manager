@@ -1,5 +1,16 @@
-# class Tag
-#   def self.create(content:)
+class Tag
+  attr_reader :id, :content
 
-#   end
-# end
+  def self.create(content:)
+    result = DatabaseConnection.query(
+      "INSERT INTO tags (content)
+      VALUES ('#{content}') RETURNING id;"
+    ).first
+    new(id: result['id'], content: content)
+  end
+
+  def initialize(id:, content:)
+    @id = id
+    @content = content
+  end
+end
