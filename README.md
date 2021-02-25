@@ -19,34 +19,63 @@ gems
 
 ## Setting up database
 
-- First, connect to psql
+- Connect to psql
 
 ### Development Environment:
 
-  - Create `bookmark_manager` database:
-  ```sql
-  CREATE DATABASE bookmark_manager;
-  ```
-  - Create `bookmarks` table
-  ```sql
-  CREATE TABLE bookmarks(
-    id SERIAL PRIMARY KEY,
-    url VARCHAR(60)
-  );
-  ```
-  - Add `title` column to bookmarks table
-  ```sql
-  ALTER TABLE Bookmarks
-  ADD COLUMN title varchar(60);
+- Create `bookmark_manager` database:
+```sql
+CREATE DATABASE bookmark_manager;
+```
 
-  ```
-  - Create `comments` table
-  ```sql
-  CREATE TABLE comments(
-    id SERIAL PRIMARY KEY,
-    text VARCHAR(240),
-    bookmark_id INTEGER REFERENCES bookmarks (id)
-  );
+- Create `bookmarks` table
+```sql
+CREATE TABLE bookmarks(
+  id SERIAL PRIMARY KEY,
+  url VARCHAR(60)
+);
+```
+
+- Add `title` column to bookmarks table
+```sql
+ALTER TABLE Bookmarks
+ADD COLUMN title varchar(60);
+```
+
+- Create `comments` table
+```sql
+CREATE TABLE comments(
+  id SERIAL PRIMARY KEY,
+  text VARCHAR(240),
+  bookmark_id INTEGER REFERENCES bookmarks (id)
+);
+```
+
+- Add `cascade on delete` to `foreign key constraint` of `comments`
+```sql
+ALTER TABLE comments
+DROP CONSTRAINT comments_bookmark_id_fkey,
+ADD CONSTRAINT comments_bookmark_id_fkey
+	FOREIGN KEY (bookmark_id)
+	REFERENCES bookmarks(id)
+	ON DELETE CASCADE;
+```
+
+- Create `tags` table
+```sql
+CREATE TABLE tags(
+  id SERIAL PRIMARY KEY,
+  content VARCHAR (60)
+);
+```
+
+- Create `join table` for `bookmakrs` and `tags` tables: `bookmark_tags`
+```sql
+CREATE TABLE bookmark_tags(
+  id SERIAL PRIMARY KEY,
+  bookmark_id INTEGER REFERENCES bookmarks (id),
+  tag_id INTEGER REFERENCES tags (id)
+);
 ```
 
 ### Test Environment
@@ -55,8 +84,7 @@ gems
   ```sql
   CREATE DATABASE bookmark_manager;
   ```
-  - Create identical `bookmarks` table as above
-  - Create id
+  - Create identical table schema to development/production database, by following all instructions above
 
 ## Running tests
 
