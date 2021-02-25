@@ -1,11 +1,13 @@
 require 'sinatra'
+require 'sinatra/flash'
 require './lib/bookmark'
 require './database_connection_setup'
 
 class BookmarkManager < Sinatra::Base
   configure do
-    enable :sessions
-    set    :session_secret, ENV['SESSION_SECRET']
+    register Sinatra::Flash
+    enable   :sessions
+    set      :session_secret, ENV['SESSION_SECRET']
   end
 
   get '/' do

@@ -6,9 +6,14 @@ ruby '2.7.2'
 
 group :development, :production do
   gem 'puma'
+  gem 'sinatra-flash'
+end
+
+group :test, :development, :production do
+  gem 'pg'
   gem 'rack'
   gem 'sinatra'
-  gem 'pg'
+  gem 'uri'
 end
 
 group :test, :development do
