@@ -12,6 +12,7 @@ group :development, :production do
 end
 
 group :test, :development do
+  gem 'rake'
   gem 'rubocop', require: false
 end
 
