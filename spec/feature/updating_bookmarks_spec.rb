@@ -15,9 +15,11 @@ feature 'updating bookmarks' do
 
     click_button 'Submit'
 
+    expect(page).not_to have_link('Test', href: 'http://test.com')
+
     expect(current_path).to eq '/bookmarks'
 
     expect(page).to have_link('Updated', href: 'http://test.com')
-    expect(page).not_to have_link('Test', href: 'http://test.com')
+
   end
 end

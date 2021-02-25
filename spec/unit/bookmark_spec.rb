@@ -72,15 +72,26 @@ describe Bookmark do
 
   describe '#title' do
     it 'returns the bookmarks title' do
-      bookmark = described_class.new(title: 'Test', url: 'http://test.com/', id: 1)
+      bookmark = described_class.create(title: 'Test', url: 'http://test.com/')
       expect(bookmark.title).to eq 'Test'
     end
   end
 
   describe '#url' do
     it 'returns the url' do
-      bookmark = described_class.new(title: 'Test', url: 'http://test.com/', id: 1)
+      bookmark = described_class.create(title: 'Test', url: 'http://test.com/')
       expect(bookmark.url).to eq 'http://test.com/'
+    end
+  end
+
+  describe '#comments' do
+    it 'returns the comments for that bookmark' do
+      bookmark = described_class.create(title: 'Test', url: 'http://test.com')
+      DatabaseConnection.query(
+        "INSERT INTO comments(text, bookmark_id)
+        VALUES('test comment', '#{bookmark.id}')
+      ")
+      expect(bookmark.comments.first).to eq 'test comment'
     end
   end
 end

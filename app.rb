@@ -5,11 +5,11 @@ require './lib/bookmark'
 require './database_connection_setup'
 
 class BookmarkManager < Sinatra::Base
-  register Sinatra::Flash
-
   configure do
-    enable   :sessions
-    set      :session_secret, ENV['SESSION_SECRET']
+    enable :sessions
+    set    :session_secret, ENV['SESSION_SECRET']
+
+    register Sinatra::Flash
   end
 
   get '/' do
@@ -39,11 +39,25 @@ class BookmarkManager < Sinatra::Base
 
   get '/bookmarks/:id/edit' do
     @bookmark = Bookmark.find(id: params[:id])
-    erb :edit
+    erb :'bookmarks/edit'
   end
 
   patch '/bookmarks/:id' do
     Bookmark.update(id: params[:id], title: params[:title], url: params[:url])
+    redirect '/bookmarks'
+  end
+
+  get '/bookmarks/:id/comments/new' do
+    @id = params[:id]
+    erb :'bookmarks/comments/new'
+  end
+
+  post '/bookmarks/:id/comments' do
+    connection = PG.connect(dbname: 'bookmark_manager_test')
+    connection.exec(
+      "INSERT INTO comments(text, bookmark_id)
+      VALUES('#{params[:comment]}', '#{params[:id]}');"
+      )
     redirect '/bookmarks'
   end
 

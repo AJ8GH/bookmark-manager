@@ -18,6 +18,16 @@
         <input type="hidden" name="_method" value="PATCH">
         <input type="submit" value="Update">
       </form>
+
+      <form action="bookmarks/<%= bookmark.id %>/comments/new">
+        <input type="submit" value="Add Comment">
+      </form>
+
+      <ul>
+        <% bookmark.comments.each do |comment| %>
+          <li><%= comment %></li>
+        <% end %>
+      </ul>
     </li>
   <% end %>
 </ul>

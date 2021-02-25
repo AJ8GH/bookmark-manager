@@ -4,7 +4,6 @@ Coveralls.wear!
 ENV['RACK_ENV']    = 'test'
 ENV['ENVIRONMENT'] = 'test'
 
-require          'database_connection'
 require_relative '../database_connection_setup'
 require_relative 'setup_test_database'
 

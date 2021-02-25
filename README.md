@@ -31,8 +31,23 @@ gems
   ```sql
   CREATE TABLE bookmarks(
     id SERIAL PRIMARY KEY,
-    url VARCHAR ( 60 )
+    url VARCHAR(60)
   );
+  ```
+  - Add `title` column to bookmarks table
+  ```sql
+  ALTER TABLE Bookmarks
+  ADD COLUMN title varchar(60);
+
+  ```
+  - Create `comments` table
+  ```sql
+  CREATE TABLE comments(
+    id SERIAL PRIMARY KEY,
+    text VARCHAR(240),
+    bookmark_id INTEGER REFERENCES bookmarks (id)
+  );
+```
 
 ### Test Environment
 
@@ -41,6 +56,7 @@ gems
   CREATE DATABASE bookmark_manager;
   ```
   - Create identical `bookmarks` table as above
+  - Create id
 
 ## Running tests
 
