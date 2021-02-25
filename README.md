@@ -85,19 +85,15 @@ I want to be able to see a list of bookmarks
 
 ### Add new bookmarks
 
-```
 As a website user,
 So that I can revisit pages I enjoy,
 I want to be able to add bookmarks
-```
 
 ### Delete bookmarks
 
-```
 As a website user,
 So that I can remove bookmarks I no longer need,
 I want to be able to delete bookmarks
-```
 
 ### Update bookmarks
 
@@ -107,8 +103,24 @@ I want to be able to update bookmarks
 
 ### Comment on bookmarks
 
+As a user,
+So that I can share opinions on bookmarks,
+I want to be able to comment on bookmarks
+
 ### Tag bookmarks into categories
+
+As a user,
+So that I can easily see which category a bookmark is,
+I want to be able to add tags to bookmkarks
 
 ### Filter bookmarks by tag
 
+As a user,
+So that I can see bookmarks of a specific category,
+I want to be able to filter bookmarks by their tags
+
 ### Users are restricted to manage only their own bookmarks
+
+As a user,
+So that other users can't delete or edit my bookmarks,
+I want to have my bookmarks secured with a password
