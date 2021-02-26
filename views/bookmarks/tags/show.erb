@@ -1,8 +1,10 @@
-<% @tag.bookmarks.each do |bookmark| %>
-  <a href="<%= bookmark.url %>">
+<% @bookmarks.each do |bookmark| %>
+  <a href="<%= bookmark.url %>" target="_blank">
     <%= bookmark.title %>
   </a>
-  <% bookmark.comments.each do |comment| %>
-    <%= comment.text %>
-  <% end %>
+  <ul>
+    <% bookmark.comments.each do |comment| %>
+      <li><%= comment.text %></li>
+    <% end %>
+  </ul>
 <% end %>
