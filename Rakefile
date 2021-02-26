@@ -1,3 +1,5 @@
+require 'pg'
+
 task :test_database_setup do
   DatabaseConnection.setup('bookmark_manager_test')
   DatabaseConnection.query(
