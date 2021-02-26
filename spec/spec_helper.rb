@@ -5,7 +5,10 @@ ENV['RACK_ENV']    = 'test'
 ENV['ENVIRONMENT'] = 'test'
 
 require_relative '../database_connection_setup'
-require_relative 'setup_test_database'
+
+require 'rake'
+
+Rake.application.load_rakefile
 
 require_relative '../app'
 
@@ -17,7 +20,7 @@ require 'rspec'
 Capybara.app = BookmarkManager
 
 RSpec.configure do |config|
-  config.before(:each) { setup_test_database }
+  config.before(:each) { Rake::Task['test_database_setup'].execute }
 
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true

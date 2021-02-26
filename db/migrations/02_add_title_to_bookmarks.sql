@@ -1,3 +1,2 @@
 ALTER TABLE bookmarks
-ADD COLUMN
-  title varchar ( 60 );
+  ADD COLUMN title VARCHAR (60);

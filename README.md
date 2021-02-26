@@ -19,72 +19,11 @@ gems
 
 ## Setting up database
 
-- Connect to psql
+Run rake task:
 
-### Development Environment:
-
-- Create `bookmark_manager` database:
-```sql
-CREATE DATABASE bookmark_manager;
+```shell
+rake create_databases
 ```
-
-- Create `bookmarks` table
-```sql
-CREATE TABLE bookmarks(
-  id SERIAL PRIMARY KEY,
-  url VARCHAR(60)
-);
-```
-
-- Add `title` column to bookmarks table
-```sql
-ALTER TABLE Bookmarks
-ADD COLUMN title varchar(60);
-```
-
-- Create `comments` table
-```sql
-CREATE TABLE comments(
-  id SERIAL PRIMARY KEY,
-  text VARCHAR(240),
-  bookmark_id INTEGER REFERENCES bookmarks (id)
-);
-```
-
-- Add `cascade on delete` to `foreign key constraint` of `comments`
-```sql
-ALTER TABLE comments
-DROP CONSTRAINT comments_bookmark_id_fkey,
-ADD CONSTRAINT comments_bookmark_id_fkey
-	FOREIGN KEY (bookmark_id)
-	REFERENCES bookmarks(id)
-	ON DELETE CASCADE;
-```
-
-- Create `tags` table
-```sql
-CREATE TABLE tags(
-  id SERIAL PRIMARY KEY,
-  content VARCHAR (60)
-);
-```
-
-- Create `join table` for `bookmakrs` and `tags` tables: `bookmark_tags`
-```sql
-CREATE TABLE bookmark_tags(
-  id SERIAL PRIMARY KEY,
-  bookmark_id INTEGER REFERENCES bookmarks (id),
-  tag_id INTEGER REFERENCES tags (id)
-);
-```
-
-### Test Environment
-
-  - Create `bookmark_manager_test` database:
-  ```sql
-  CREATE DATABASE bookmark_manager;
-  ```
-  - Create identical table schema to development/production database, by following all instructions above
 
 ## Running tests
 
@@ -103,11 +42,9 @@ CREATE TABLE bookmark_tags(
 
 ### Show a list of bookmarks
 
-```
 As a user,
 So that I can quickly visit my favourite sites,
 I want to be able to see a list of bookmarks
-```
 
 ![show-list-of-bookmarks](public/images/domain-models/see_list_of_bookmarks.png)
 
