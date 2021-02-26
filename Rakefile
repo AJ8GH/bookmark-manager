@@ -1,7 +1,7 @@
 task :test_database_setup do
   DatabaseConnection.setup('bookmark_manager_test')
   DatabaseConnection.query(
-    'TRUNCATE TABLE bookmarks, comments, tags, bookmark_tags
+    'TRUNCATE TABLE bookmarks, comments, tags, bookmark_tags, users
     RESTART IDENTITY;'
   )
 end
@@ -51,6 +51,14 @@ task :create_databases do
         id SERIAL PRIMARY KEY,
         bookmark_id INTEGER REFERENCES bookmarks (id),
         tag_id INTEGER REFERENCES tags (id)
+      );"
+    )
+
+    connection.exec(
+      "CREATE TABLE users(
+        id SERIAL PRIMARY KEY,
+        email VARCHAR (255) UNIQUE NOT NULL,
+        password VARCHAR (50) NOT NULL
       );"
     )
   end

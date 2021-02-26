@@ -6,6 +6,7 @@ require './lib/bookmark'
 require './lib/comment'
 require './lib/tag'
 require './lib/bookmark_tag'
+require './lib/user'
 
 class BookmarkManager < Sinatra::Base
   configure do
@@ -17,6 +18,10 @@ class BookmarkManager < Sinatra::Base
 
   get '/' do
     erb :index
+  end
+
+  get '/new' do
+    erb :'new'
   end
 
   get '/bookmarks/new' do
