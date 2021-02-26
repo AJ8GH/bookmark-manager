@@ -9,4 +9,5 @@ before_script:
   - psql -U postgres -c 'CREATE DATABASE bookmark_manager_test;'
 
 script:
+  - bundle exec rake create_tables
   - bundle exec rspec
