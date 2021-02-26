@@ -41,6 +41,18 @@ class Bookmark
       )
     end
 
+    def where(tag_id:)
+      result = DatabaseConnection.query(
+        "SELECT * FROM bookmarks
+        INNER JOIN bookmark_tags
+        ON bookmarks.id = bookmark_id
+        WHERE tag_id = '#{tag_id}';"
+      )
+      result.map do |row|
+        new(id: row['bookmark_id'], title: row['title'], url: row['url'])
+      end
+    end
+
     private
 
     def valid_url?(url)

@@ -96,4 +96,49 @@ describe Bookmark do
       expect(comment.bookmark_id).to eq bookmark.id
     end
   end
+
+  describe '.where' do
+    it 'returns single bookmark for tag with one bookmark' do
+      bookmark1 = described_class.create(title: 'Test 1', url: 'http://test1.com')
+      bookmark2 = described_class.create(title: 'Test 2', url: 'http://test2.com')
+
+      tag1 = Tag.create(content: 'Tag 1')
+      tag2 = Tag.create(content: 'Tag 2')
+
+      BookmarkTag.create(tag_id: tag1.id, bookmark_id: bookmark1.id)
+      BookmarkTag.create(tag_id: tag2.id, bookmark_id: bookmark2.id)
+
+      result1 = described_class.where(tag_id: tag1.id)
+      result2 = described_class.where(tag_id: tag2.id)
+
+      expect(result1.first.title).to eq 'Test 1'
+      expect(result2.first.title).to eq 'Test 2'
+
+      expect(result1.first.url).to eq 'http://test1.com'
+      expect(result2.first.url).to eq 'http://test2.com'
+    end
+
+    it 'returns all bookmark for tags with multiple bookmarks' do
+      bookmark1 = described_class.create(title: 'Test 1', url: 'http://test1.com')
+      bookmark2 = described_class.create(title: 'Test 2', url: 'http://test2.com')
+      bookmark3 = described_class.create(title: 'Test 3', url: 'http://test3.com')
+
+      tag1 = Tag.create(content: 'Tag 1')
+
+      BookmarkTag.create(tag_id: tag1.id, bookmark_id: bookmark1.id)
+      BookmarkTag.create(tag_id: tag1.id, bookmark_id: bookmark2.id)
+      BookmarkTag.create(tag_id: tag1.id, bookmark_id: bookmark3.id)
+
+      result = described_class.where(tag_id: tag1.id)
+
+      expect(result.length).to be 3
+      expect(result.map(&:title)).to include 'Test 1'
+      expect(result.map(&:title)).to include 'Test 2'
+      expect(result.map(&:title)).to include 'Test 3'
+
+      expect(result.map(&:url)).to include 'http://test1.com'
+      expect(result.map(&:url)).to include 'http://test2.com'
+      expect(result.map(&:url)).to include 'http://test3.com'
+    end
+  end
 end

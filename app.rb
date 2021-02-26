@@ -78,7 +78,7 @@ class BookmarkManager < Sinatra::Base
   end
 
   get '/bookmarks/tags/:id' do
-    @bookmarks = Tag.find(id: params[:id]).bookmarks
+    @tag = Tag.find(id: params[:id])
     erb :'bookmarks/tags/show'
   end
 
