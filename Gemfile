@@ -14,6 +14,7 @@ group :test, :development, :production do
   gem 'rack'
   gem 'sinatra'
   gem 'uri'
+  gem 'bcrypt'
 end
 
 group :test, :development do

@@ -12,7 +12,6 @@ class BookmarkManager < Sinatra::Base
   configure do
     enable :sessions
     set    :session_secret, ENV['SESSION_SECRET']
-
     register Sinatra::Flash
   end
 
@@ -20,8 +19,23 @@ class BookmarkManager < Sinatra::Base
     erb :index
   end
 
-  get '/new' do
-    erb :'new'
+  get '/users/new' do
+    erb :'users/new'
+  end
+
+  get '/sessions/new' do
+    erb :'sessions/new'
+  end
+
+  post '/sessions/authenticate' do
+    user = User.find(user_id: params[:id])
+    redirect '/bookmarks'
+  end
+
+  post '/' do
+    user = User.create(email: params[:email], password: params[:password])
+    session[:user_id] = user.id
+    redirect '/bookmarks'
   end
 
   get '/bookmarks/new' do
@@ -43,6 +57,7 @@ class BookmarkManager < Sinatra::Base
   get '/bookmarks' do
     @bookmarks = Bookmark.all
     @tags = Tag.all
+    @user = User.find(user_id: session[:user_id]) if session[:user_id]
     erb :'bookmarks/index'
   end
 

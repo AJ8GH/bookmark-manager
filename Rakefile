@@ -1,8 +1,7 @@
 task :test_database_setup do
   DatabaseConnection.setup('bookmark_manager_test')
   DatabaseConnection.query(
-    'TRUNCATE TABLE bookmarks, comments, tags, bookmark_tags, users
-    RESTART IDENTITY;'
+    'TRUNCATE bookmarks, comments, tags, bookmark_tags, users RESTART IDENTITY;'
   )
 end
 
