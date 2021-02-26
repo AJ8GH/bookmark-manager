@@ -19,7 +19,6 @@ class Bookmark
         VALUES('#{title}', '#{url}')
         RETURNING id;"
       ).first
-
       new(id: result['id'], url: url, title: title)
     end
 
@@ -37,10 +36,15 @@ class Bookmark
     def update(id:, title:, url:)
       DatabaseConnection.query(
         "UPDATE bookmarks
-        SET title = '#{title}',
-        url = '#{url}'
+        SET title = '#{title}', url = '#{url}'
         WHERE id = #{id};"
       )
+    end
+
+    private
+
+    def valid_url?(url)
+      url =~ /\A#{URI.regexp(%w[http https])}\z/
     end
   end
 
@@ -52,11 +56,5 @@ class Bookmark
 
   def comments(comment_class = Comment)
     comment_class.where(bookmark_id: id)
-  end
-
-  private
-
-  def self.valid_url?(url)
-    url =~ /\A#{URI::regexp(['http', 'https'])}\z/
   end
 end

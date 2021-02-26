@@ -19,6 +19,8 @@ end
 group :test, :development do
   gem 'rake'
   gem 'rubocop', require: false
+  gem 'rubocop-rake', require: false
+  gem 'rubocop-rspec', require: false
 end
 
 group :test do

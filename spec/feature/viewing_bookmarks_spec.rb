@@ -1,5 +1,4 @@
 feature 'viewing bookmarks' do
-
   scenario 'visiting index page' do
     visit '/'
     expect(page).to have_content 'Bookmark Manager'
@@ -16,5 +15,3 @@ feature 'viewing bookmarks' do
     expect(page).to have_link('Destroy', href: 'http://www.destroyallsoftware.com')
   end
 end
-
-

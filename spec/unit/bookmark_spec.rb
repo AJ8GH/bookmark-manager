@@ -16,8 +16,8 @@ describe Bookmark do
   describe '.create' do
     it 'adds a bookmark to the database' do
       bookmark = described_class.create(title: 'Test', url: 'http://test.com/')
-      expect(described_class.all.map(&:title)).to include('Test')
-      expect(described_class.all.map(&:url)).to include('http://test.com/')
+      expect(bookmark.title).to eq('Test')
+      expect(bookmark.url).to eq('http://test.com/')
     end
 
     it 'creates a new bookmark' do
@@ -89,10 +89,11 @@ describe Bookmark do
       bookmark = described_class.create(title: 'Test', url: 'http://test.com')
       DatabaseConnection.query(
         "INSERT INTO comments(text, bookmark_id)
-        VALUES('test comment', '#{bookmark.id}')
-      ")
+        VALUES('test comment', '#{bookmark.id}')"
+      )
       comment = bookmark.comments.first
       expect(comment.text).to eq 'test comment'
+      expect(comment.bookmark_id).to eq bookmark.id
     end
   end
 end

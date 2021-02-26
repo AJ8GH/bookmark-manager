@@ -24,14 +24,20 @@ class BookmarkManager < Sinatra::Base
   end
 
   post '/bookmarks' do
-    valid_url = Bookmark.create(title: params[:title], url: params[:url])
-    flash[:notice] = "That's not a valid url" unless valid_url
+    bookmark = Bookmark.create(title: params[:title], url: params[:url])
+    flash[:notice] = "That's not a valid url" unless bookmark
+
+    if params[:tag] && bookmark
+      tag = Tag.create(content: params[:tag])
+      BookmarkTag.create(tag_id: tag.id, bookmark_id: bookmark.id)
+    end
 
     redirect '/bookmarks'
   end
 
   get '/bookmarks' do
     @bookmarks = Bookmark.all
+    @tags = Tag.all
     erb :'bookmarks/index'
   end
 
@@ -66,8 +72,14 @@ class BookmarkManager < Sinatra::Base
   end
 
   post '/bookmarks/:id/tags' do
-    Tag.create(content: params[:tag])
+    tag = Tag.create(content: params[:tag])
+    BookmarkTag.create(tag_id: tag.id, bookmark_id: params[:id])
     redirect '/bookmarks'
+  end
+
+  get '/bookmarks/tags/:id' do
+    @bookmarks = Tag.find(id: params[:id]).bookmarks
+    erb :'bookmarks/tags/show'
   end
 
   run! if app_file == $PROGRAM_NAME

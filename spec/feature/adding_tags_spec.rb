@@ -10,3 +10,16 @@ feature 'creating a tag and seeing it in bookmarks page' do
     expect(page).to have_content 'Test tag'
   end
 end
+
+feature 'Adding tag at point of creation' do
+  scenario 'clicking on tag, seeing bookmarks' do
+    visit '/bookmarks'
+    click_button 'Add Bookmark'
+    fill_in :title, with: 'Test'
+    fill_in :url, with: 'http://test.com'
+    fill_in :tag, with: 'Test tag'
+    click_button 'Submit'
+
+    expect(page).to have_content 'Test tag'
+  end
+end

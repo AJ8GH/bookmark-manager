@@ -2,6 +2,14 @@
   <input type="submit" value="Add Bookmark">
 </form>
 
+<h2>Tags</h2>
+<% @tags.each do |tag| %>
+  <a href="bookmarks/tags/<%= tag.id %>">
+    <%= tag.content %>
+  </a>
+<% end %>
+
+<h2>Bookmarks</h2>
 <ul>
   <% @bookmarks.each do |bookmark| %>
     <li class="bookmark">
@@ -32,7 +40,6 @@
           <li><%= comment.text %></li>
         <% end %>
       </ul>
-    </li>
   <% end %>
 </ul>
 
